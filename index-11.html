@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Chamados - GreenTech Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #006465;
+            --secondary-color: #00a8a8;
+            --accent-color: #4cd3c2;
+            --light-color: #e6f7f7;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --gray-light: #f8f9fa;
+            --gray-medium: #e9ecef;
+            --text-dark: #343a40;
+            --text-light: #6c757d;
+            --card-shadow: 0 10px 20px rgba(0, 100, 101, 0.1);
+            --hover-shadow: 0 15px 30px rgba(0, 100, 101, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 100, 101, 0.2);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--light-color);
+            padding: 8px 15px;
+            border-radius: 50px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--gray-medium);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 100, 101, 0.2);
+        }
+        
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            z-index: 10;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .search-suggestion {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .search-suggestion:hover {
+            background-color: var(--light-color);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 100, 101, 0.85), rgba(0, 168, 168, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: var(--primary-color);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .areas-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: var(--secondary-color);
+        }
+        
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .area-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .area-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .area-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--light-color);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .area-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            font-size: 1.3rem;
+        }
+        
+        .area-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        .status-section {
+            padding: 60px 0;
+            background-color: var(--gray-light);
+        }
+        
+        .status-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .status-filter {
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: white;
+            border: 1px solid var(--gray-medium);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .status-filter.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .tickets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .ticket-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .ticket-title {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .ticket-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-open {
+            background-color: rgba(0, 100, 101, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .status-progress {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .status-closed {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+        
+        .ticket-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .ticket-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .btn-details {
+            background: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-details:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .metrics-section {
+            padding: 60px 0;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        
+        .metric-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        .faq-section {
+            padding: 60px 0;
+            background-color: var(--gray-light);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .faq-question:hover {
+            background-color: var(--light-color);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        .assistant-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .assistant-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 100, 101, 0.2);
+        }
+        
+        .assistant-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 100, 101, 0.3);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--gray-medium);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--gray-medium);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 100, 101, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-upload-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-upload-label {
+            display: block;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--gray-medium);
+            text-align: center;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload:hover .file-upload-label {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-submit {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-submit:hover {
+            background: var(--secondary-color);
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .success-icon {
+            font-size: 3rem;
+            color: var(--success-color);
+            margin-bottom: 20px;
+        }
+        
+        .subcategories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .subcategory {
+            background: var(--light-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .subcategory:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .notification-panel {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 350px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--hover-shadow);
+            z-index: 10;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .notification-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--gray-medium);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .notification-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .notification-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--gray-light);
+            transition: background-color 0.2s;
+        }
+        
+        .notification-item:hover {
+            background-color: var(--light-color);
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .notification-time {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .star {
+            font-size: 1.8rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .star.active {
+            color: var(--warning-color);
+        }
+        
+        .fixed-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 99;
+        }
+        
+        .fixed-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 100, 101, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .fixed-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 100, 101, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .areas-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .notification-panel {
+                width: 300px;
+                right: -50px;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h1>GreenTech Logistics</h1>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Pesquise por área, tema ou chamado...">
+                    <div class="search-suggestions">
+                        <div class="search-suggestion" data-area="ti">Suporte técnico - TI</div>
+                        <div class="search-suggestion" data-area="rh">Dúvidas sobre folha - RH</div>
+                        <div class="search-suggestion" data-area="operacoes">Relatórios operacionais - Operações</div>
+                        <div class="search-suggestion" data-area="logistica">Rastreamento - Logística</div>
+                        <div class="search-suggestion" data-area="sustentabilidade">Projetos ambientais - Sustentabilidade</div>
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell fa-lg" style="color: var(--primary-color);"></i>
+                        <div class="notification-badge">3</div>
+                        <div class="notification-panel">
+                            <div class="notification-header">Notificações</div>
+                            <div class="notification-list">
+                                <div class="notification-item">
+                                    <div class="notification-title">Chamado #102 atualizado</div>
+                                    <div class="notification-desc">Status alterado para "Em andamento"</div>
+                                    <div class="notification-time">Há 2 horas</div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-title">Chamado #98 resolvido</div>
+                                    <div class="notification-desc">Seu chamado foi concluído</div>
+                                    <div class="notification-time">Ontem</div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-title">Novo recurso disponível</div>
+                                    <div class="notification-desc">Agora você pode anexar múltiplos arquivos</div>
+                                    <div class="notification-time">Há 3 dias</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-info">
+                        <div class="user-avatar">JS</div>
+                        <span>João Silva</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Bem-vindo ao Portal de Chamados da GreenTech Logistics!</h2>
+                <p>Aqui, nossos colaboradores encontram uma forma rápida, prática e digital de solicitar suporte, acompanhar chamados e colaborar com diferentes áreas da empresa.</p>
+                <p>Nosso objetivo é simplificar processos e melhorar a experiência de cada colaborador, onde quer que ele esteja.</p>
+                
+                <div class="hero-actions">
+                    <a href="#" class="action-btn" id="open-ticket-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        Abrir Chamado
+                    </a>
+                    <a href="#" class="action-btn secondary">
+                        <i class="fas fa-question-circle"></i>
+                        Central de Ajuda
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="areas-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-th-large"></i>
+                Áreas de Suporte
+            </h2>
+            
+            <div class="areas-grid">
+                <div class="area-card" data-area="ti">
+                    <div class="area-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="area-title">Tecnologia da Informação</h3>
+                    <p class="area-description">Suporte técnico, acessos, equipamentos, sistemas internos.</p>
+                </div>
+                
+                <div class="area-card" data-area="rh">
+                    <div class="area-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="area-title">Recursos Humanos</h3>
+                    <p class="area-description">Dúvidas sobre folha, benefícios, férias e treinamentos.</p>
+                </div>
+                
+                <div class="area-card" data-area="operacoes">
+                    <div class="area-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="area-title">Operações</h3>
+                    <p class="area-description">Suporte a rotinas operacionais, relatórios e processos produtivos.</p>
+                </div>
+                
+                <div class="area-card" data-area="logistica">
+                    <div class="area-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="area-title">Logística</h3>
+                    <p class="area-description">Transporte, expedição, rastreamento e armazenamento.</p>
+                </div>
+                
+                <div class="area-card" data-area="sustentabilidade">
+                    <div class="area-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="area-title">Sustentabilidade</h3>
+                    <p class="area-description">Projetos ambientais, campanhas internas e ações de responsabilidade social.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="status-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-tasks"></i>
+                Acompanhe seus chamados
+            </h2>
+            
+            <div class="status-filters">
+                <div class="status-filter active" data-status="all">Todos</div>
+                <div class="status-filter" data-status="open">🔵 Abertos</div>
+                <div class="status-filter" data-status="progress">🟡 Em andamento</div>
+                <div class="status-filter" data-status="closed">🟢 Concluídos</div>
+            </div>
+            
+            <div class="tickets-grid">
+                <div class="ticket-card" data-status="open">
+                    <div class="ticket-header">
+                        <h3 class="ticket-title">Problema com acesso ao sistema</h3>
+                        <div class="ticket-status status-open">Aberto</div>
+                    </div>
+                    <div class="ticket-date">Criado em: 15/10/2023</div>
+                    <p>Não consigo acessar o sistema de relatórios desde ontem.</p>
+                    <div class="ticket-actions">
+                        <button class="btn-details">Ver detalhes</button>
+                    </div>
+                </div>
+                
+                <div class="ticket-card" data-status="progress">
+                    <div class="ticket-header">
+                        <h3 class="ticket-title">Solicitação de férias</h3>
+                        <div class="ticket-status status-progress">Em andamento</div>
+                    </div>
+                    <div class="ticket-date">Criado em: 10/10/2023</div>
+                    <p>Gostaria de solicitar minhas férias para o mês de dezembro.</p>
+                    <div class="ticket-actions">
+                        <button class="btn-details">Ver detalhes</button>
+                    </div>
+                </div>
+                
+                <div class="ticket-card" data-status="closed">
+                    <div class="ticket-header">
+                        <h3 class="ticket-title">Problema com impressora</h3>
+                        <div class="ticket-status status-closed">Concluído</div>
+                    </div>
+                    <div class="ticket-date">Criado em: 05/10/2023</div>
+                    <p>Impressora do setor administrativo não está funcionando.</p>
+                    <div class="ticket-actions">
+                        <button class="btn-details">Ver detalhes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="metrics-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-chart-bar"></i>
+                Métricas de Atendimento
+            </h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="resolved-tickets">0</div>
+                    <div class="metric-label">Chamados resolvidos este mês</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value" id="avg-response">0</div>
+                    <div class="metric-label">Tempo médio de resposta (horas)</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value" id="satisfaction">0%</div>
+                    <div class="metric-label">Nível de satisfação dos colaboradores</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-question-circle"></i>
+                Dúvidas Frequentes
+            </h2>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Como acompanhar meu chamado?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Você pode acompanhar o status dos seus chamados na seção "Acompanhe seus chamados" nesta página. Lá você encontrará todos os seus chamados com seus respectivos status e poderá ver detalhes clicando no botão "Ver detalhes".</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Posso anexar documentos?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim, ao abrir um chamado você tem a opção de anexar arquivos relevantes para ajudar na resolução do seu problema. Formatos suportados: PDF, JPG, PNG, DOC, DOCX, XLS, XLSX.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Em quanto tempo recebo retorno?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nosso tempo médio de resposta é de 4 horas para chamados críticos e 24 horas para chamados normais. Você receberá notificações por e-mail e no portal sobre atualizações no status do seu chamado.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Posso abrir chamados para outras áreas?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim, você pode abrir chamados para qualquer uma das 5 áreas disponíveis: TI, Recursos Humanos, Operações, Logística e Sustentabilidade. Se tiver dúvidas sobre qual área escolher, nossa assistente virtual Keeper pode ajudar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="assistant-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-robot"></i>
+                Precisa de ajuda adicional?
+            </h2>
+            <p>Nossa assistente virtual está disponível para tirar dúvidas e ajudar com questões sobre benefícios.</p>
+            <a href="https://landbot.online/v3/H-3143714-JKILDF603HUQ4XS4/index.html" class="assistant-btn" target="_blank">
+                <i class="fas fa-comments"></i>
+                Fale com a Keeper, nossa assistente de benefícios
+            </a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GreenTech Logistics</h3>
+                    <p>Inovação, sustentabilidade e tecnologia para uma logística mais eficiente e responsável.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contatos</h3>
+                    <p><i class="fas fa-phone"></i> (11) 3456-7890</p>
+                    <p><i class="fas fa-envelope"></i> contato@greentechlogistics.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - São Paulo, SP</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <a href="#">Intranet</a>
+                    <a href="#">Políticas Internas</a>
+                    <a href="#">Benefícios</a>
+                    <a href="#">Portal RH</a>
+                    <a href="index-8.html">Dashboard de Performance</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 GreenTech Logistics. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal para subcategorias -->
+    <div class="modal" id="subcategories-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="subcategories-title">Selecione uma subcategoria</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="subcategories" id="subcategories-list">
+                    <!-- Subcategorias serão inseridas aqui dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para formulário de chamado -->
+    <div class="modal" id="ticket-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ticket-title">Abrir Chamado</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="ticket-form">
+                    <div class="form-group">
+                        <label class="form-label" for="user-name">Nome</label>
+                        <input type="text" class="form-control" id="user-name" value="João Silva" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="user-email">E-mail</label>
+                        <input type="email" class="form-control" id="user-email" value="joao.silva@greentech.com" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="ticket-description">Descrição do chamado</label>
+                        <textarea class="form-control" id="ticket-description" placeholder="Descreva detalhadamente o problema ou solicitação..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Anexe um arquivo (opcional)</label>
+                        <div class="file-upload">
+                            <input type="file" class="file-upload-input" id="file-upload">
+                            <label class="file-upload-label" for="file-upload">
+                                <i class="fas fa-cloud-upload-alt"></i> Clique para selecionar um arquivo
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Enviar Chamado</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de sucesso -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="success-message">
+                    <div class="success-icon">✅</div>
+                    <h3>Seu chamado foi registrado com sucesso!</h3>
+                    <p>Nossa equipe entrará em contato em breve.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de detalhes do chamado -->
+    <div class="modal" id="details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Detalhes do Chamado</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="ticket-details">
+                    <!-- Detalhes do chamado serão inseridos aqui dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de avaliação -->
+    <div class="modal" id="rating-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Avalie nosso atendimento</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-message">
+                    <div class="rating-stars">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Comentário (opcional)</label>
+                        <textarea class="form-control" id="rating-comment" placeholder="Deixe seu comentário sobre o atendimento..."></textarea>
+                    </div>
+                    <button class="btn-submit" id="submit-rating">Enviar Avaliação</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botões fixos para chatbot e dashboard -->
+    <div class="fixed-buttons">
+        <a href="https://landbot.online/v3/H-3143714-JKILDF603HUQ4XS4/index.html" class="fixed-btn" target="_blank">
+            <i class="fas fa-robot"></i>
+        </a>
+        <a href="index-8.html" class="fixed-btn">
+            <i class="fas fa-chart-line"></i>
+        </a>
+    </div>
+    
+    <script>
+        // Dados das áreas e subcategorias
+        const areasData = {
+            ti: {
+                title: "Tecnologia da Informação",
+                subcategories: [
+                    "Suporte técnico",
+                    "Acessos e senhas",
+                    "Equipamentos",
+                    "Sistemas internos",
+                    "Rede e conectividade",
+                    "Software"
+                ]
+            },
+            rh: {
+                title: "Recursos Humanos",
+                subcategories: [
+                    "Folha de pagamento",
+                    "Benefícios",
+                    "Férias e afastamentos",
+                    "Treinamentos",
+                    "Documentação",
+                    "Processos seletivos"
+                ]
+            },
+            operacoes: {
+                title: "Operações",
+                subcategories: [
+                    "Rotinas operacionais",
+                    "Relatórios",
+                    "Processos produtivos",
+                    "Qualidade",
+                    "Manutenção",
+                    "Segurança do trabalho"
+                ]
+            },
+            logistica: {
+                title: "Logística",
+                subcategories: [
+                    "Transporte",
+                    "Expedição",
+                    "Rastreamento",
+                    "Armazenamento",
+                    "Inventário",
+                    "Distribuição"
+                ]
+            },
+            sustentabilidade: {
+                title: "Sustentabilidade",
+                subcategories: [
+                    "Projetos ambientais",
+                    "Campanhas internas",
+                    "Ações de responsabilidade social",
+                    "Gestão de resíduos",
+                    "Eficiência energética",
+                    "Relatórios de sustentabilidade"
+                ]
+            }
+        };
+        
+        // Elementos DOM
+        const searchInput = document.querySelector('.search-input');
+        const searchSuggestions = document.querySelector('.search-suggestions');
+        const areaCards = document.querySelectorAll('.area-card');
+        const statusFilters = document.querySelectorAll('.status-filter');
+        const ticketCards = document.querySelectorAll('.ticket-card');
+        const faqItems = document.querySelectorAll('.faq-item');
+        const notificationIcon = document.querySelector('.notification-icon');
+        const notificationPanel = document.querySelector('.notification-panel');
+        const modals = document.querySelectorAll('.modal');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const subcategoriesModal = document.getElementById('subcategories-modal');
+        const ticketModal = document.getElementById('ticket-modal');
+        const successModal = document.getElementById('success-modal');
+        const detailsModal = document.getElementById('details-modal');
+        const ratingModal = document.getElementById('rating-modal');
+        const ticketForm = document.getElementById('ticket-form');
+        const subcategoriesList = document.getElementById('subcategories-list');
+        const subcategoriesTitle = document.getElementById('subcategories-title');
+        const ticketTitle = document.getElementById('ticket-title');
+        const ticketDetails = document.getElementById('ticket-details');
+        const stars = document.querySelectorAll('.star');
+        const submitRating = document.getElementById('submit-rating');
+        const resolvedTickets = document.getElementById('resolved-tickets');
+        const avgResponse = document.getElementById('avg-response');
+        const satisfaction = document.getElementById('satisfaction');
+        const btnDetails = document.querySelectorAll('.btn-details');
+        const openTicketBtn = document.getElementById('open-ticket-btn');
+        
+        // Variáveis globais
+        let currentArea = '';
+        let currentSubcategory = '';
+        let selectedRating = 0;
+        
+        // Função para animar números
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animar métricas
+            setTimeout(() => {
+                animateValue(resolvedTickets, 0, 142, 1500);
+                animateValue(avgResponse, 0, 4, 1500);
+                
+                let satisfactionValue = 0;
+                const satisfactionInterval = setInterval(() => {
+                    satisfactionValue += 1;
+                    satisfaction.innerHTML = satisfactionValue + '%';
+                    if (satisfactionValue >= 94) {
+                        clearInterval(satisfactionInterval);
+                    }
+                }, 20);
+            }, 500);
+            
+            // Abrir modal de avaliação após 5 segundos (simulação)
+            setTimeout(() => {
+                // ratingModal.style.display = 'flex';
+            }, 5000);
+        });
+        
+        // Funcionalidade da barra de busca
+        searchInput.addEventListener('input', function() {
+            const value = this.value.toLowerCase();
+            
+            if (value.length > 0) {
+                searchSuggestions.style.display = 'block';
+                
+                // Filtrar sugestões
+                const suggestions = document.querySelectorAll('.search-suggestion');
+                suggestions.forEach(suggestion => {
+                    const text = suggestion.textContent.toLowerCase();
+                    if (text.includes(value)) {
+                        suggestion.style.display = 'block';
+                    } else {
+                        suggestion.style.display = 'none';
+                    }
+                });
+            } else {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+        
+        // Fechar sugestões ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+        
+        // Ao clicar em uma sugestão de busca
+        document.querySelectorAll('.search-suggestion').forEach(suggestion => {
+            suggestion.addEventListener('click', function() {
+                const area = this.getAttribute('data-area');
+                openSubcategoriesModal(area);
+                searchInput.value = '';
+                searchSuggestions.style.display = 'none';
+            });
+        });
+        
+        // Funcionalidade das áreas
+        areaCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const area = this.getAttribute('data-area');
+                openSubcategoriesModal(area);
+            });
+        });
+        
+        // Botão "Abrir Chamado" na seção hero
+        openTicketBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Abrir modal de subcategorias sem área específica
+            subcategoriesTitle.textContent = "Selecione uma área de suporte";
+            
+            // Limpar lista de subcategorias
+            subcategoriesList.innerHTML = '';
+            
+            // Adicionar todas as áreas como opções
+            for (const area in areasData) {
+                const areaElement = document.createElement('div');
+                areaElement.className = 'subcategory';
+                areaElement.textContent = areasData[area].title;
+                areaElement.addEventListener('click', function() {
+                    openSubcategoriesModal(area);
+                });
+                
+                subcategoriesList.appendChild(areaElement);
+            }
+            
+            subcategoriesModal.style.display = 'flex';
+        });
+        
+        // Abrir modal de subcategorias
+        function openSubcategoriesModal(area) {
+            currentArea = area;
+            const areaInfo = areasData[area];
+            
+            subcategoriesTitle.textContent = `Selecione uma subcategoria - ${areaInfo.title}`;
+            
+            // Limpar lista de subcategorias
+            subcategoriesList.innerHTML = '';
+            
+            // Adicionar subcategorias
+            areaInfo.subcategories.forEach(subcategory => {
+                const subcategoryElement = document.createElement('div');
+                subcategoryElement.className = 'subcategory';
+                subcategoryElement.textContent = subcategory;
+                subcategoryElement.addEventListener('click', function() {
+                    currentSubcategory = subcategory;
+                    openTicketModal();
+                });
+                
+                subcategoriesList.appendChild(subcategoryElement);
+            });
+            
+            subcategoriesModal.style.display = 'flex';
+        }
+        
+        // Abrir modal de ticket
+        function openTicketModal() {
+            const areaInfo = areasData[currentArea];
+            ticketTitle.textContent = `Abrir Chamado - ${areaInfo.title}: ${currentSubcategory}`;
+            ticketModal.style.display = 'flex';
+            subcategoriesModal.style.display = 'none';
+        }
+        
+        // Fechar modais
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            });
+        });
+        
+        // Fechar modal ao clicar fora
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                }
+            });
+        });
+        
+        // Envio do formulário de ticket
+        ticketForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simular envio
+            setTimeout(() => {
+                ticketModal.style.display = 'none';
+                successModal.style.display = 'flex';
+                
+                // Fechar modal de sucesso após 3 segundos
+                setTimeout(() => {
+                    successModal.style.display = 'none';
+                }, 3000);
+            }, 1000);
+        });
+        
+        // Funcionalidade dos filtros de status
+        statusFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                // Remover classe active de todos os filtros
+                statusFilters.forEach(f => f.classList.remove('active'));
+                
+                // Adicionar classe active ao filtro clicado
+                this.classList.add('active');
+                
+                const status = this.getAttribute('data-status');
+                
+                // Filtrar tickets
+                ticketCards.forEach(card => {
+                    if (status === 'all' || card.getAttribute('data-status') === status) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Funcionalidade do FAQ (acordeão)
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', function() {
+                // Fechar todos os itens
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Alternar o item atual
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Funcionalidade das notificações
+        notificationIcon.addEventListener('click', function() {
+            notificationPanel.style.display = notificationPanel.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Fechar notificações ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!notificationIcon.contains(e.target) && !notificationPanel.contains(e.target)) {
+                notificationPanel.style.display = 'none';
+            }
+        });
+        
+        // Funcionalidade das estrelas de avaliação
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                selectedRating = rating;
+                
+                // Atualizar visualização das estrelas
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Efeito hover
+            star.addEventListener('mouseover', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.style.color = '#ffc107';
+                    } else {
+                        s.style.color = '#ddd';
+                    }
+                });
+            });
+            
+            star.addEventListener('mouseout', function() {
+                stars.forEach((s, index) => {
+                    if (index < selectedRating) {
+                        s.style.color = '#ffc107';
+                    } else {
+                        s.style.color = '#ddd';
+                    }
+                });
+            });
+        });
+        
+        // Envio da avaliação
+        submitRating.addEventListener('click', function() {
+            if (selectedRating > 0) {
+                // Simular envio
+                setTimeout(() => {
+                    ratingModal.style.display = 'none';
+                    
+                    // Mostrar mensagem de agradecimento
+                    alert('⭐ Obrigado por avaliar! Sua opinião ajuda a melhorar nossos atendimentos.');
+                }, 500);
+            } else {
+                alert('Por favor, selecione uma avaliação antes de enviar.');
+            }
+        });
+        
+        // Funcionalidade do botão "Ver detalhes"
+        btnDetails.forEach(button => {
+            button.addEventListener('click', function() {
+                const ticketCard = this.closest('.ticket-card');
+                const title = ticketCard.querySelector('.ticket-title').textContent;
+                const status = ticketCard.querySelector('.ticket-status').textContent;
+                const date = ticketCard.querySelector('.ticket-date').textContent;
+                const description = ticketCard.querySelector('p').textContent;
+                
+                // Preencher detalhes do chamado
+                ticketDetails.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Título</label>
+                        <div class="form-control" style="background: #f8f9fa;">${title}</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <div class="form-control" style="background: #f8f9fa;">${status}</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Data de Criação</label>
+                        <div class="form-control" style="background: #f8f9fa;">${date}</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Descrição</label>
+                        <div class="form-control" style="background: #f8f9fa; min-height: 100px;">${description}</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Histórico</label>
+                        <div class="form-control" style="background: #f8f9fa; min-height: 100px;">
+                            <p><strong>15/10/2023 10:30</strong> - Chamado aberto</p>
+                            <p><strong>15/10/2023 11:15</strong> - Em análise pela equipe</p>
+                            <p><strong>16/10/2023 09:00</strong> - ${status === 'Concluído' ? 'Chamado resolvido' : 'Em andamento'}</p>
+                        </div>
+                    </div>
+                `;
+                
+                detailsModal.style.display = 'flex';
+            });
+        });
+    </script>
+</body>
+</html>
